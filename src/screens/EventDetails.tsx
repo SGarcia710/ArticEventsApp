@@ -31,9 +31,15 @@ const EventDetails = ({route}: Props) => {
     const startDate = new Date('2024-02-18T09:00:00').getTime();
     const endDate = new Date('2024-02-18T12:00:00').getTime();
 
-    console.log('HERE I AM');
-    CalendarManager.addEvent(title, location, startDate, endDate);
-    console.log('HERE I AM 2');
+    // CalendarManager.addEvent(title, location, startDate, endDate);
+
+    CalendarManager.addEvent(title, location, startDate, endDate)
+      .then((message: string) => {
+        console.log(message); // Event added successfully!
+      })
+      .catch((errorMessage: string) => {
+        console.error(errorMessage); // Handle the error message
+      });
   };
 
   const startTime = event.start_time.split(':');
