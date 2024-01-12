@@ -16,7 +16,7 @@ import Toast from 'react-native-toast-message';
 import {SWRConfig} from 'swr';
 
 import {fetcher} from '@app/api';
-import MainStackNavigator from '@app/navigation/MainStackNavigator';
+import MainStackNavigator from './navigation/MainStackNavigator';
 
 check(PERMISSIONS.IOS.CALENDARS)
   .then(result => {
