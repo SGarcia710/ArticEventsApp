@@ -16,7 +16,7 @@ import Toast from 'react-native-toast-message';
 import {SWRConfig} from 'swr';
 
 import {fetcher} from './api';
-import RootNavigator from './navigation/RootNavigator';
+import MainStackNavigator from './navigation/MainStackNavigator';
 
 check(PERMISSIONS.IOS.CALENDARS)
   .then(result => {
@@ -56,7 +56,7 @@ function App(): React.JSX.Element {
           value={{
             fetcher,
           }}>
-          <RootNavigator />
+          <MainStackNavigator />
         </SWRConfig>
       </NavigationContainer>
       <ToastWrapper />

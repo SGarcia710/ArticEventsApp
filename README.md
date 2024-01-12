@@ -18,12 +18,18 @@
 - Select you preferred platform (iOS or Android) and create your own Native Module using the Bridge or the new Fabric Native Components to add the events schedules into the user calendar (Please don't use a react native package)
 - OPTIONAL: Additional bonus if you implement some kind of push notifications.
 
+## Bonus:
+
+- Toast notifications
+
 ## TODO:
 
 - Improve layout injection: Header not to be added on each screen manually.
 - Make it work on Android
+- Open the event in the Calendar App when the event is added. If not, keep the notification.
 
 ## Links
 
 - Icons: https://www.figma.com/community/file/886554014393250663
 - Native Modules: https://reactnative.dev/docs/native-modules-ios
+- Navigation tree: https://reactnavigation.org/docs/hiding-tabbar-in-screens

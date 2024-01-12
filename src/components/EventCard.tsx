@@ -15,8 +15,10 @@ import {COLORS} from '../constants/colors';
 
 const EventCard = (props: ArticEvent) => {
   const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+    useNavigation<NativeStackNavigationProp<MainStackNavigatorParamList>>();
+
   const {width} = useWindowDimensions();
+
   return (
     <Pressable
       style={styles.container}

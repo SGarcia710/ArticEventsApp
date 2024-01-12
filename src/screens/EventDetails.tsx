@@ -20,7 +20,7 @@ import {COLORS} from '../constants/colors';
 const {CalendarManager} = NativeModules;
 
 type Props = {
-  route: RouteProp<RootStackParamList, 'EventDetails'>;
+  route: RouteProp<MainStackNavigatorParamList, 'EventDetails'>;
 };
 
 const EventDetails = ({route}: Props) => {
@@ -28,7 +28,6 @@ const EventDetails = ({route}: Props) => {
 
   const {width} = useWindowDimensions();
   const {bottom} = useSafeAreaInsets();
-  console.log(bottom);
 
   const addEventToCalendar = () => {
     const title = 'Sample Event2';
