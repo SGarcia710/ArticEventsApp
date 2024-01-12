@@ -1,5 +1,10 @@
+import {DateBadge} from '@app/components';
+import Header from '@app/components/Header';
+import {COLORS} from '@app/constants/colors';
+import CalendarManager from '@app/nativeModules/CalendarManager';
+import {createDate} from '@app/utils';
 import {RouteProp} from '@react-navigation/native';
-import React from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {
   Pressable,
   ScrollView,
@@ -13,10 +18,6 @@ import RenderHTML from 'react-native-render-html';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 
-import Header from '@app/components/Header';
-import {COLORS} from '@app/constants/colors';
-import CalendarManager from '@app/nativeModules/CalendarManager';
-
 type Props = {
   route: RouteProp<MainStackNavigatorParamList, 'EventDetails'>;
 };
@@ -27,13 +28,27 @@ const EventDetails = ({route}: Props) => {
   const {width} = useWindowDimensions();
   const {bottom} = useSafeAreaInsets();
 
-  const addEventToCalendar = () => {
-    const title = 'Sample Event2';
-    const location = 'Sample Location2';
-    const startDate = new Date('2024-02-18T09:00:00').getTime();
-    const endDate = new Date('2024-02-18T12:00:00').getTime();
+  const startDate = useMemo(
+    () => createDate(event.start_date, event.start_time),
+    [],
+  );
 
-    CalendarManager.addEvent(title, location, startDate, endDate)
+  const endDate = useMemo(() => createDate(event.end_date, event.end_time), []);
+
+  const duration = useMemo(() => {
+    const _duration = endDate.diff(startDate, 'hours').toObject();
+    return _duration.hours as number;
+  }, []);
+
+  const addEventToCalendar = useCallback(() => {
+    const title = event.title;
+    const location = !!event.is_virtual_event
+      ? event.virtual_event_url
+      : event.location;
+    const _startDate = startDate.toMillis();
+    const _endDate = endDate.toMillis();
+
+    CalendarManager.addEvent(title, location, _startDate, _endDate)
       .then((message: string) => {
         Toast.show({
           type: 'success',
@@ -48,14 +63,7 @@ const EventDetails = ({route}: Props) => {
           text2: errorMessage.message,
         });
       });
-  };
-
-  const startTime = event.start_time.split(':');
-  const endTime = event.end_time.split(':');
-  const startDate = new Date(event.start_date);
-  startDate.setHours(parseInt(startTime[0]), parseInt(startTime[1]));
-  const endDate = new Date(event.start_date);
-  endDate.setHours(parseInt(endTime[0]), parseInt(endTime[1]));
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -63,29 +71,65 @@ const EventDetails = ({route}: Props) => {
         alwaysBounceVertical={false}
         bounces={false}
         style={styles.scrollContainer}>
-        <Animated.Image
-          sharedTransitionTag={event.slug}
-          style={[styles.image, {width}]}
-          source={{uri: event.image_url}}
-        />
+        <View style={[styles.topContainer, {width}]}>
+          <Animated.Image
+            sharedTransitionTag={event.slug}
+            style={[styles.image, {width}]}
+            source={{uri: event.image_url}}
+          />
+          <DateBadge />
+        </View>
         <Header />
 
-        {/* <Text style={styles.title}>
-          {startDate.toString()}
-          {startDate.getMonth()}
-        </Text> */}
-        {/* <Text style={styles.title}>{endDate.toString()}</Text>
-        <Text style={styles.title}>{event.start_time}</Text>
-        <Text style={styles.title}>{event.end_time}</Text> */}
         <View style={styles.body}>
           <Text style={styles.title}>{event.title}</Text>
 
-          <RenderHTML
-            contentWidth={width - 40}
-            source={{
-              html: event.description || '',
-            }}
-          />
+          {!!event.short_description && (
+            <RenderHTML
+              baseStyle={styles.shortDesc}
+              contentWidth={width - 40}
+              source={{
+                html: event.short_description,
+              }}
+            />
+          )}
+
+          <View style={styles.subSectionContainer}>
+            <Text style={styles.subTitle}>Date and Time</Text>
+            <Text>
+              {startDate.toFormat("'Starts on 'cccc, LLLL d - t ZZZZ''Z")}
+              {/* {event.date_display} */}
+            </Text>
+          </View>
+
+          <View style={styles.subSectionContainer}>
+            <Text style={styles.subTitle}>Location</Text>
+            {event.is_virtual_event && <Text>Online</Text>}
+            {!event.is_virtual_event && <Text>{event.location}</Text>}
+          </View>
+
+          <View style={styles.subSectionContainer}>
+            <Text style={styles.subTitle}>About this event</Text>
+            <Text>
+              {duration} hour{duration > 1 ? 's' : ''}
+            </Text>
+
+            {event.is_free && <Text>{'\n'}Free</Text>}
+
+            {event.is_member_exclusive && <Text>{'\n'}Member Exclusive</Text>}
+
+            {event.is_after_hours && <Text>{'\n'}After hours</Text>}
+          </View>
+
+          <View style={styles.subSectionContainer}>
+            <Text style={styles.subTitle}>Description</Text>
+            <RenderHTML
+              contentWidth={width - 40}
+              source={{
+                html: event.description || '',
+              }}
+            />
+          </View>
         </View>
       </ScrollView>
 
@@ -108,12 +152,22 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flex: 1,
   },
-  image: {
+  topContainer: {
     height: 300,
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
+    padding: 20,
+  },
+  image: {
+    position: 'absolute',
+    height: 300,
+  },
+  shortDesc: {
+    marginBottom: 18,
   },
   title: {
     color: COLORS.black,
-    fontSize: 20,
+    fontSize: 32,
     fontWeight: 'bold',
   },
   desc: {
@@ -135,4 +189,10 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     paddingHorizontal: 20,
   },
+  subTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+  subSectionContainer: {marginBottom: 24},
 });

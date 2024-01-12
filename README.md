@@ -25,8 +25,9 @@
 ## TODO:
 
 - Improve layout injection: Header not to be added on each screen manually.
-- Make it work on Android
+- Make it work on Android.
 - Open the event in the Calendar App when the event is added. If not, keep the notification.
+- Handle links in HTML Renderer.
 
 ## Links
 
