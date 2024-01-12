@@ -15,7 +15,10 @@
 
 RCT_EXPORT_MODULE();
 
-RCT_EXPORT_METHOD(addEvent:(NSString *)title location:(NSString *)location startDate:(NSDate *)startDate endDate:(NSDate *)endDate)
+RCT_EXPORT_METHOD(addEvent:(NSString *)title
+                  location:(NSString *)location
+                 startDate:(nonnull NSNumber *)startDate
+                   endDate:(nonnull NSNumber *)endDate)
 {
     EKEventStore *eventStore = [[EKEventStore alloc] init];
     [eventStore requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
@@ -25,8 +28,15 @@ RCT_EXPORT_METHOD(addEvent:(NSString *)title location:(NSString *)location start
             EKEvent *event = [EKEvent eventWithEventStore:eventStore];
             event.title = title;
             event.location = location;
-            event.startDate = startDate;
-            event.endDate = endDate;
+          
+            // Convert JavaScript timestamp to NSTimeInterval (seconds)
+            NSTimeInterval startSeconds = [startDate doubleValue] / 1000.0;
+            NSTimeInterval endSeconds = [endDate doubleValue] / 1000.0;
+
+            // Create NSDate objects using NSTimeIntervals
+            event.startDate = [NSDate dateWithTimeIntervalSince1970:startSeconds];
+            event.endDate = [NSDate dateWithTimeIntervalSince1970:endSeconds];
+
             event.calendar = [eventStore defaultCalendarForNewEvents];
 
             NSError *eventError = nil;

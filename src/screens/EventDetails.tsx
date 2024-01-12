@@ -26,14 +26,22 @@ const EventDetails = ({route}: Props) => {
   const navigation = useNavigation();
 
   const addEventToCalendar = () => {
-    const title = 'Sample Event';
-    const location = 'Sample Location';
-    const startDate = new Date('2024-01-13T09:00:00'); // Replace with your start date
-    const endDate = new Date('2024-01-13T10:00:00'); // Replace with your end date
+    const title = 'Sample Event2';
+    const location = 'Sample Location2';
+    const startDate = new Date('2024-02-18T09:00:00').getTime();
+    const endDate = new Date('2024-02-18T12:00:00').getTime();
+
     console.log('HERE I AM');
     CalendarManager.addEvent(title, location, startDate, endDate);
     console.log('HERE I AM 2');
   };
+
+  const startTime = event.start_time.split(':');
+  const endTime = event.end_time.split(':');
+  const startDate = new Date(event.start_date);
+  startDate.setHours(parseInt(startTime[0]), parseInt(startTime[1]));
+  const endDate = new Date(event.start_date);
+  endDate.setHours(parseInt(endTime[0]), parseInt(endTime[1]));
 
   return (
     <ScrollView style={styles.container}>
@@ -56,6 +64,13 @@ const EventDetails = ({route}: Props) => {
         }}>
         <Text>Add to calendar</Text>
       </Pressable>
+      <Text style={styles.title}>
+        {startDate.toString()}
+        {startDate.getMonth()}
+      </Text>
+      <Text style={styles.title}>{endDate.toString()}</Text>
+      <Text style={styles.title}>{event.start_time}</Text>
+      <Text style={styles.title}>{event.end_time}</Text>
       <Text style={styles.title}>{event.title}</Text>
       <Text style={styles.desc}>{event.description}</Text>
     </ScrollView>
