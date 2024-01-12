@@ -31,8 +31,6 @@ const EventDetails = ({route}: Props) => {
     const startDate = new Date('2024-02-18T09:00:00').getTime();
     const endDate = new Date('2024-02-18T12:00:00').getTime();
 
-    // CalendarManager.addEvent(title, location, startDate, endDate);
-
     CalendarManager.addEvent(title, location, startDate, endDate)
       .then((message: string) => {
         console.log(message); // Event added successfully!

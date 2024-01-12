@@ -5,9 +5,6 @@
 //  Created by Sebastian García on 11/01/24.
 //
 
-// #import <Foundation/Foundation.h>
-
-
 #import "CalendarManager.h"
 #import <EventKit/EventKit.h>
 
@@ -46,13 +43,10 @@ RCT_EXPORT_METHOD(addEvent:(NSString *)title
       NSError *eventError = nil;
       [eventStore saveEvent:event span:EKSpanThisEvent commit:YES error:&eventError];
       if (eventError) {
-        // NSLog(@"Error saving event: %@", eventError);
         NSString *errorMessage = [NSString stringWithFormat:@"Error saving event: %@", eventError.localizedDescription];
         NSLog(@"%@", errorMessage);
         reject(@"EVENT_SAVE_ERROR", errorMessage, nil);
       } else {
-        // NSLog(@"Event added successfully!");
-        
         NSString *successMessage = @"Event added successfully!";
         NSLog(@"%@", successMessage);
         resolve(successMessage);

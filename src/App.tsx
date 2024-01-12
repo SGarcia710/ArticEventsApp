@@ -17,20 +17,20 @@ check(PERMISSIONS.IOS.CALENDARS)
   .then(result => {
     switch (result) {
       case RESULTS.DENIED:
-        console.log(
-          'The permission has not been requested / is denied but requestable',
-        );
+        // The permission has not been requested / is denied but requestable
         request(PERMISSIONS.IOS.CALENDARS)
-          .then(result => {
-            // …
-            console.log('Permission cool, ', result);
+          .then(() => {
+            // all ok
           })
           .catch(() => {
-            console.log('The permission was denied');
+            // denied, inform
           });
         break;
       case RESULTS.GRANTED:
-        console.log('The permission is granted');
+        // The permission is granted
+        break;
+      case RESULTS.BLOCKED:
+        // The permission is denied and not requestable anymore, inform
         break;
     }
   })
