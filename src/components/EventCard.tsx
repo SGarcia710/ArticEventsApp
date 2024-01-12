@@ -1,9 +1,9 @@
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import React, {useCallback} from 'react';
-import {COLORS} from './colors';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import Animated from 'react-native-reanimated';
+import {COLORS} from '../constants/colors';
 
 const EventCard = (props: ArticEvent) => {
   const navigation =

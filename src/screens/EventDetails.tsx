@@ -9,9 +9,10 @@ import {
 import React, {useCallback} from 'react';
 import Animated from 'react-native-reanimated';
 import {RouteProp, useNavigation} from '@react-navigation/native';
-import {COLORS} from '../components/colors';
 
 import {NativeModules} from 'react-native';
+import {COLORS} from '../constants/colors';
+import Header from '../components/Header';
 
 const {CalendarManager} = NativeModules;
 
@@ -23,7 +24,6 @@ const EventDetails = ({route}: Props) => {
   const {event} = route.params;
 
   const {width} = useWindowDimensions();
-  const navigation = useNavigation();
 
   const addEventToCalendar = () => {
     const title = 'Sample Event2';
@@ -56,9 +56,9 @@ const EventDetails = ({route}: Props) => {
           source={{uri: event.image_url}}
         />
       </View>
-      <Pressable onPress={navigation.goBack}>
-        <Text>BACK</Text>
-      </Pressable>
+
+      <Header />
+
       <Pressable
         onPress={() => {
           // Function to add event to iOS calendar
