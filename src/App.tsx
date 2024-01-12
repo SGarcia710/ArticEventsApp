@@ -5,13 +5,18 @@
  * @format
  */
 
-import React from 'react';
-import {SWRConfig} from 'swr';
 import {NavigationContainer} from '@react-navigation/native';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
+import React from 'react';
+import {PERMISSIONS, RESULTS, check, request} from 'react-native-permissions';
+import {
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
+import {SWRConfig} from 'swr';
+
 import {fetcher} from './api';
 import RootNavigator from './navigation/RootNavigator';
-import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 
 check(PERMISSIONS.IOS.CALENDARS)
   .then(result => {
@@ -38,6 +43,11 @@ check(PERMISSIONS.IOS.CALENDARS)
     // …
   });
 
+const ToastWrapper = () => {
+  const {top} = useSafeAreaInsets();
+  return <Toast topOffset={top} />;
+};
+
 function App(): React.JSX.Element {
   return (
     <SafeAreaProvider>
@@ -49,6 +59,7 @@ function App(): React.JSX.Element {
           <RootNavigator />
         </SWRConfig>
       </NavigationContainer>
+      <ToastWrapper />
     </SafeAreaProvider>
   );
 }

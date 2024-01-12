@@ -1,19 +1,20 @@
+import {RouteProp} from '@react-navigation/native';
+import React from 'react';
 import {
+  NativeModules,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   View,
   useWindowDimensions,
-  ScrollView,
 } from 'react-native';
-import React, {useCallback} from 'react';
 import Animated from 'react-native-reanimated';
-import {RouteProp, useNavigation} from '@react-navigation/native';
-
-import {NativeModules} from 'react-native';
-import {COLORS} from '../constants/colors';
-import Header from '../components/Header';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
+
+import Header from '../components/Header';
+import {COLORS} from '../constants/colors';
 
 const {CalendarManager} = NativeModules;
 
@@ -36,10 +37,18 @@ const EventDetails = ({route}: Props) => {
 
     CalendarManager.addEvent(title, location, startDate, endDate)
       .then((message: string) => {
-        console.log(message); // Event added successfully!
+        Toast.show({
+          type: 'success',
+          text1: 'Added!',
+          text2: 'The event was added to your Calendar app.',
+        });
       })
-      .catch((errorMessage: string) => {
-        console.error(errorMessage); // Handle the error message
+      .catch((errorMessage: Error) => {
+        Toast.show({
+          type: 'error',
+          text1: 'Ups',
+          text2: errorMessage.message,
+        });
       });
   };
 
@@ -66,15 +75,6 @@ const EventDetails = ({route}: Props) => {
 
         <Header />
 
-        <Pressable
-          onPress={() => {
-            // Function to add event to iOS calendar
-
-            // Call the function to add an event
-            addEventToCalendar();
-          }}>
-          <Text>Add to calendar</Text>
-        </Pressable>
         <Text style={styles.title}>
           {startDate.toString()}
           {startDate.getMonth()}
@@ -87,6 +87,7 @@ const EventDetails = ({route}: Props) => {
       </ScrollView>
 
       <Pressable
+        onPress={addEventToCalendar}
         style={[styles.calendarButtonContainer, {marginBottom: bottom}]}>
         <Text style={styles.calendarButtonText}>Add to calendar</Text>
       </Pressable>
