@@ -25,7 +25,18 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
+# Fix Reanimated's Shared Transitions bug.
 target 'ArticCatalogApp' do
+  pre_install do |installer|
+    installer.pod_targets.each do |pod|
+      if pod.name.eql?('RNScreens')
+        def pod.build_type
+          Pod::BuildType.static_library
+        end
+      end
+    end
+  end
+
   config = use_native_modules!
 
   use_react_native!(
