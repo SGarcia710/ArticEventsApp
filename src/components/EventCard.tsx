@@ -1,14 +1,22 @@
-import {Pressable, StyleSheet, Text, View} from 'react-native';
-import React, {useCallback} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import React from 'react';
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 import Animated from 'react-native-reanimated';
+import RenderHtml from 'react-native-render-html';
+
 import {COLORS} from '../constants/colors';
 
 const EventCard = (props: ArticEvent) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-
+  const {width} = useWindowDimensions();
   return (
     <Pressable
       style={styles.container}
@@ -22,7 +30,17 @@ const EventCard = (props: ArticEvent) => {
       />
       <View style={styles.body}>
         <Text style={styles.title}>{props.title}</Text>
-        <Text style={styles.desc}>{props.short_description}</Text>
+
+        <RenderHtml
+          contentWidth={width - 60}
+          source={{
+            html:
+              props.short_description ||
+              props.list_description ||
+              props.header_description ||
+              '',
+          }}
+        />
       </View>
     </Pressable>
   );
@@ -32,16 +50,12 @@ export default EventCard;
 
 const styles = StyleSheet.create({
   container: {
-    margin: 4,
     marginHorizontal: 20,
     marginTop: 16,
     backgroundColor: COLORS.white,
     borderRadius: 4,
     borderWidth: 1,
     borderColor: COLORS.gray,
-    // shadowOffset: {width: 2, height: 3},
-    // shadowColor: COLORS.black2,
-    // shadowOpacity: 0.2,
   },
   body: {
     padding: 10,

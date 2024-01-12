@@ -10,6 +10,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import Animated from 'react-native-reanimated';
+import RenderHTML from 'react-native-render-html';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 
@@ -65,25 +66,30 @@ const EventDetails = ({route}: Props) => {
         alwaysBounceVertical={false}
         bounces={false}
         style={styles.scrollContainer}>
-        <View>
-          <Animated.Image
-            sharedTransitionTag={event.slug}
-            style={[styles.image, {width}]}
-            source={{uri: event.image_url}}
-          />
-        </View>
-
+        <Animated.Image
+          sharedTransitionTag={event.slug}
+          style={[styles.image, {width}]}
+          source={{uri: event.image_url}}
+        />
         <Header />
 
-        <Text style={styles.title}>
+        {/* <Text style={styles.title}>
           {startDate.toString()}
           {startDate.getMonth()}
-        </Text>
-        <Text style={styles.title}>{endDate.toString()}</Text>
+        </Text> */}
+        {/* <Text style={styles.title}>{endDate.toString()}</Text>
         <Text style={styles.title}>{event.start_time}</Text>
-        <Text style={styles.title}>{event.end_time}</Text>
-        <Text style={styles.title}>{event.title}</Text>
-        <Text style={styles.desc}>{event.description}</Text>
+        <Text style={styles.title}>{event.end_time}</Text> */}
+        <View style={styles.body}>
+          <Text style={styles.title}>{event.title}</Text>
+
+          <RenderHTML
+            contentWidth={width - 40}
+            source={{
+              html: event.description || '',
+            }}
+          />
+        </View>
       </ScrollView>
 
       <Pressable
@@ -110,8 +116,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: COLORS.black,
-    marginBottom: 8,
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
   },
   desc: {
@@ -128,5 +133,9 @@ const styles = StyleSheet.create({
   },
   calendarButtonText: {
     color: COLORS.black,
+  },
+  body: {
+    paddingTop: 12,
+    paddingHorizontal: 20,
   },
 });
