@@ -1,8 +1,9 @@
 export const COLORS = {
-  white: '#f5f6fa',
-  black: '#2f3640',
-  black2: '#353b48',
-  white2: '#dcdde1',
-  green: '#4cd137',
-  green2: '#44bd32'
+  white: '#FFFFFF',
+  black: '#08090E', // for text
+  black2: '#000000', // as background
+  yellow: '#F9D531',
+  yellow2: '#FFCC05', // darker to use over white (in text)
+  pearl: '#F5F7F9',
+  gray: '#B2B8C1',
 };

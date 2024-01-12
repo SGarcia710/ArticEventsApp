@@ -29,10 +29,10 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#2f3640',
+    backgroundColor: COLORS.white,
   },
   title: {
-    color: COLORS.white,
+    color: COLORS.black,
     fontSize: 34,
     fontWeight: 'bold',
     marginLeft: 20,

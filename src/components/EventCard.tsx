@@ -35,14 +35,19 @@ const styles = StyleSheet.create({
     margin: 4,
     marginHorizontal: 20,
     marginTop: 16,
-    backgroundColor: COLORS.black2,
+    backgroundColor: COLORS.white,
     borderRadius: 4,
+    borderWidth: 1,
+    borderColor: COLORS.gray,
+    // shadowOffset: {width: 2, height: 3},
+    // shadowColor: COLORS.black2,
+    // shadowOpacity: 0.2,
   },
   body: {
     padding: 10,
   },
   title: {
-    color: COLORS.white,
+    color: COLORS.black,
     fontWeight: '600',
     fontSize: 18,
     marginBottom: 8,
@@ -54,7 +59,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   desc: {
-    color: COLORS.white,
+    color: COLORS.black,
     fontSize: 16,
   },
 });

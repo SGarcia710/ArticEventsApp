@@ -17,15 +17,15 @@ const Header = (props: Props) => {
   return (
     <View style={[styles.container, {top}]}>
       <Pressable style={styles.iconContainer} onPress={navigation.goBack}>
-        <ChevronLeft fill={COLORS.black} width={34} height={34} />
+        <ChevronLeft fill={COLORS.black} width={32} height={32} />
       </Pressable>
 
       <Pressable style={styles.iconContainer} onPress={() => {}}>
         <BookmarkLine
-          stroke={COLORS.black2}
+          stroke={COLORS.black}
           strokeWidth={2}
-          width={24}
-          height={24}
+          width={22}
+          height={22}
         />
       </Pressable>
     </View>
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     right: 20,
   },
   iconContainer: {
-    backgroundColor: COLORS.white2,
+    backgroundColor: COLORS.yellow,
     width: 34,
     height: 34,
     borderRadius: 8,
