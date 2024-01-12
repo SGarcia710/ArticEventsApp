@@ -1,13 +1,11 @@
-import {Pressable, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
 import {useNavigation} from '@react-navigation/native';
+import React from 'react';
+import {Pressable, StyleSheet, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import ChevronLeft from '../assets/icons/Arrow_drop_left.svg';
-import BookmarkFill from '../assets/icons/Bookmark_fill.svg';
-import BookmarkLine from '../assets/icons/Bookmark.svg';
-
-import {COLORS} from '../constants/colors';
+import ChevronLeft from '@app/assets/icons/Arrow_drop_left.svg';
+import BookmarkLine from '@app/assets/icons/Bookmark.svg';
+import {COLORS} from '@app/constants/colors';
 
 type Props = {};
 

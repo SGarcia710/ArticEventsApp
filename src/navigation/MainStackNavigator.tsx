@@ -1,6 +1,7 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
-import {EventDetailsScreen} from '../screens';
+
+import {EventDetailsScreen} from '@app/screens';
 import BottomTabsNavigator from './BottomTabsNavigator';
 
 const Stack = createNativeStackNavigator<MainStackNavigatorParamList>();

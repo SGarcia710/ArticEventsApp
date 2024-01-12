@@ -11,7 +11,7 @@ import {
 import Animated from 'react-native-reanimated';
 import RenderHtml from 'react-native-render-html';
 
-import {COLORS} from '../constants/colors';
+import {COLORS} from '@app/constants/colors';
 
 const EventCard = (props: ArticEvent) => {
   const navigation =

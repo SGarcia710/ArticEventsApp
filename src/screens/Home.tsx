@@ -1,8 +1,9 @@
-import {FlatList, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import useEvents from '../api/hooks/useEvents';
-import {EventCard} from '../components';
-import {COLORS} from '../constants/colors';
+import {FlatList, SafeAreaView, StyleSheet, Text} from 'react-native';
+
+import useEvents from '@app/api/hooks/useEvents';
+import {EventCard} from '@app/components';
+import {COLORS} from '@app/constants/colors';
 
 const Home = () => {
   const {events, isLoading, error} = useEvents();

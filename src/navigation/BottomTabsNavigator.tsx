@@ -1,8 +1,9 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {COLORS} from '../constants/colors';
-import {BookmarksScreen, HomeScreen, SettingsScreen} from '../screens';
+
+import {COLORS} from '@app/constants/colors';
+import {BookmarksScreen, HomeScreen, SettingsScreen} from '@app/screens';
 
 const Tab = createBottomTabNavigator<BottomTabsNavigatorParamList>();
 

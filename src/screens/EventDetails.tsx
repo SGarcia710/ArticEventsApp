@@ -14,8 +14,8 @@ import RenderHTML from 'react-native-render-html';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 
-import Header from '../components/Header';
-import {COLORS} from '../constants/colors';
+import Header from '@app/components/Header';
+import {COLORS} from '@app/constants/colors';
 
 const {CalendarManager} = NativeModules;
 
