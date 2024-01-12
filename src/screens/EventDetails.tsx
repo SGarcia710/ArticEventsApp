@@ -1,7 +1,6 @@
 import {RouteProp} from '@react-navigation/native';
 import React from 'react';
 import {
-  NativeModules,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -16,8 +15,7 @@ import Toast from 'react-native-toast-message';
 
 import Header from '@app/components/Header';
 import {COLORS} from '@app/constants/colors';
-
-const {CalendarManager} = NativeModules;
+import CalendarManager from '@app/nativeModules/CalendarManager';
 
 type Props = {
   route: RouteProp<MainStackNavigatorParamList, 'EventDetails'>;
