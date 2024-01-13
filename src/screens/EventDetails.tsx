@@ -1,4 +1,4 @@
-import Header from '@app/components/Header';
+import {Header} from '@app/components';
 import {COLORS} from '@app/constants/colors';
 import CalendarManager from '@app/nativeModules/CalendarManager';
 import {createDate} from '@app/utils';

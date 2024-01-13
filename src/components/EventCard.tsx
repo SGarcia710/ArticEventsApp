@@ -12,6 +12,7 @@ import Animated from 'react-native-reanimated';
 
 import {COLORS} from '@app/constants/colors';
 import {createDate} from '@app/utils';
+import RenderHTML from 'react-native-render-html';
 
 const EventCard = (props: ArticEvent) => {
   const navigation =
@@ -30,21 +31,28 @@ const EventCard = (props: ArticEvent) => {
       onPress={() => {
         navigation.navigate('EventDetails', {event: props});
       }}>
-      <Animated.Image
-        sharedTransitionTag={props.slug}
-        style={styles.image}
-        source={{uri: props.image_url}}
-      />
-      <View style={styles.body}>
-        <Text style={styles.title}>{props.title}</Text>
-        <Text style={styles.date}>{startDate.toFormat('ccc, LLL d - t')}</Text>
-        {!props.is_virtual_event && (
-          <Text style={styles.baseText}>{props.location}</Text>
-        )}
-        {props.is_virtual_event && <Text style={styles.baseText}>Online</Text>}
-
-        {props.is_free && <Text style={styles.baseText}>{'\n'}Free</Text>}
+      <View style={styles.topContainer}>
+        <Animated.Image
+          sharedTransitionTag={props.slug}
+          style={styles.image}
+          source={{uri: props.image_url}}
+        />
+        <View
+          style={{
+            flex: 1,
+          }}>
+          <Text style={styles.title}>{props.title}</Text>
+          <Text style={styles.date}>
+            {startDate.toFormat('ccc, LLL d - t')}
+          </Text>
+        </View>
       </View>
+      <RenderHTML
+        contentWidth={width - 40}
+        source={{
+          html: props.short_description || '',
+        }}
+      />
     </Pressable>
   );
 };
@@ -57,22 +65,19 @@ const styles = StyleSheet.create({
     marginTop: 16,
     backgroundColor: COLORS.white,
   },
-  body: {
-    padding: 10,
-  },
+  topContainer: {flex: 1, flexDirection: 'row'},
   title: {
     color: COLORS.black,
     fontWeight: '600',
-    fontSize: 18,
+    fontSize: 16,
     marginBottom: 12,
   },
   image: {
-    width: '100%',
-    height: 180,
+    width: 120,
+    height: 120,
     objectFit: 'cover',
-    marginBottom: 4,
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
+    borderRadius: 8,
+    marginRight: 8,
   },
   desc: {
     color: COLORS.black,
@@ -81,7 +86,7 @@ const styles = StyleSheet.create({
   date: {
     color: COLORS.black,
     fontWeight: '600',
-    fontSize: 16,
+    fontSize: 14,
     marginBottom: 8,
   },
   baseText: {
