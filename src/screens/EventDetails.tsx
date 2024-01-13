@@ -1,4 +1,3 @@
-import {DateBadge} from '@app/components';
 import Header from '@app/components/Header';
 import {COLORS} from '@app/constants/colors';
 import CalendarManager from '@app/nativeModules/CalendarManager';
@@ -71,14 +70,11 @@ const EventDetails = ({route}: Props) => {
         alwaysBounceVertical={false}
         bounces={false}
         style={styles.scrollContainer}>
-        <View style={[styles.topContainer, {width}]}>
-          <Animated.Image
-            sharedTransitionTag={event.slug}
-            style={[styles.image, {width}]}
-            source={{uri: event.image_url}}
-          />
-          <DateBadge />
-        </View>
+        <Animated.Image
+          sharedTransitionTag={event.slug}
+          style={[styles.image, {width}]}
+          source={{uri: event.image_url}}
+        />
         <Header />
 
         <View style={styles.body}>
@@ -159,7 +155,6 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   image: {
-    position: 'absolute',
     height: 300,
   },
   shortDesc: {
@@ -175,7 +170,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   calendarButtonContainer: {
-    backgroundColor: COLORS.yellow,
+    backgroundColor: '#b50938',
     marginHorizontal: 20,
     justifyContent: 'center',
     alignItems: 'center',
@@ -183,7 +178,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   calendarButtonText: {
-    color: COLORS.black,
+    color: COLORS.white,
+    fontSize: 16,
+    fontWeight: '600',
   },
   body: {
     paddingTop: 12,

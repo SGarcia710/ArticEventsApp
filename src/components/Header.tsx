@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     right: 20,
   },
   iconContainer: {
-    backgroundColor: COLORS.yellow,
+    backgroundColor: COLORS.pearl,
     width: 34,
     height: 34,
     borderRadius: 8,
