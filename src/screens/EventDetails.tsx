@@ -1,9 +1,10 @@
 import {Header} from '@app/components';
 import {COLORS} from '@app/constants/colors';
+import {useBookmarks} from '@app/hooks/useBookmarks';
 import CalendarManager from '@app/nativeModules/CalendarManager';
 import {createDate} from '@app/utils';
 import {RouteProp} from '@react-navigation/native';
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {
   Pressable,
   ScrollView,
@@ -23,6 +24,11 @@ type Props = {
 
 const EventDetails = ({route}: Props) => {
   const {event} = route.params;
+  const {checkBookmark, saveToBookmarks, removeFromBookmarks} = useBookmarks();
+
+  const [bookmarkExists, setBookmarkexists] = useState(
+    checkBookmark(event.id.toString()),
+  );
 
   const {width} = useWindowDimensions();
   const {bottom} = useSafeAreaInsets();
@@ -48,7 +54,7 @@ const EventDetails = ({route}: Props) => {
     const _endDate = endDate.toMillis();
 
     CalendarManager.addEvent(title, location, _startDate, _endDate)
-      .then((message: string) => {
+      .then(() => {
         Toast.show({
           type: 'success',
           text1: 'Added!',
@@ -64,6 +70,16 @@ const EventDetails = ({route}: Props) => {
       });
   }, []);
 
+  const handleOnBookmarkPress = useCallback(() => {
+    if (bookmarkExists) {
+      removeFromBookmarks(event.id.toString());
+      setBookmarkexists(false);
+    } else {
+      saveToBookmarks(event);
+      setBookmarkexists(true);
+    }
+  }, []);
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -75,7 +91,10 @@ const EventDetails = ({route}: Props) => {
           style={[styles.image, {width}]}
           source={{uri: event.image_url}}
         />
-        <Header />
+        <Header
+          handleOnBookmarkPress={handleOnBookmarkPress}
+          bookmarkExists={bookmarkExists}
+        />
 
         <View style={styles.body}>
           <Text style={styles.title}>{event.title}</Text>

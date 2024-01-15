@@ -17,6 +17,7 @@
     "luxon": "^3.4.4",
     "react": "18.2.0",
     "react-native": "0.73.2",
+    "react-native-mmkv": "^2.11.0",
     "react-native-permissions": "^4.0.4",
     "react-native-reanimated": "^3.6.1",
     "react-native-render-html": "^6.3.4",

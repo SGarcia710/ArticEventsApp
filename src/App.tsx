@@ -18,30 +18,11 @@ import {SWRConfig} from 'swr';
 import {fetcher} from '@app/api';
 import MainStackNavigator from './navigation/MainStackNavigator';
 
-check(PERMISSIONS.IOS.CALENDARS)
-  .then(result => {
-    switch (result) {
-      case RESULTS.DENIED:
-        // The permission has not been requested / is denied but requestable
-        request(PERMISSIONS.IOS.CALENDARS)
-          .then(() => {
-            // all ok
-          })
-          .catch(() => {
-            // denied, inform
-          });
-        break;
-      case RESULTS.GRANTED:
-        // The permission is granted
-        break;
-      case RESULTS.BLOCKED:
-        // The permission is denied and not requestable anymore, inform
-        break;
-    }
-  })
-  .catch(error => {
-    // …
-  });
+check(PERMISSIONS.IOS.CALENDARS).then(result => {
+  if (result === RESULTS.DENIED) {
+    request(PERMISSIONS.IOS.CALENDARS);
+  }
+});
 
 const ToastWrapper = () => {
   const {top} = useSafeAreaInsets();

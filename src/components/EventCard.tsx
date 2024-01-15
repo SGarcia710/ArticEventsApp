@@ -63,7 +63,6 @@ const styles = StyleSheet.create({
   container: {
     marginHorizontal: 20,
     marginTop: 16,
-    backgroundColor: COLORS.white,
   },
   topContainer: {flex: 1, flexDirection: 'row'},
   title: {
